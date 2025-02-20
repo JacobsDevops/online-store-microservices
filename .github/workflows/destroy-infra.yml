@@ -1,4 +1,4 @@
-name: Deploy & Destroy K3s on AWS
+name: Destroy K3s on AWS
 
 on:
   workflow_dispatch:  # Her job manuel olarak çalıştırılabilir
