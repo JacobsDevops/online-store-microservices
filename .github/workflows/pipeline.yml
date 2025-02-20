@@ -1,8 +1,7 @@
-# .github/workflows/1-terraform-apply.yml
-name: 1. Deploy K3s Cluster
+name: Deploy & Destroy K3s on AWS
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:  # Her job manuel olarak çalıştırılabilir
 
 permissions:
   id-token: write
@@ -36,25 +35,14 @@ jobs:
         working-directory: k3s-terraform
         run: terraform plan
 
-      - name: Apply Terraform
+      - name: Apply Terraform (Create K3s Cluster)
         working-directory: k3s-terraform
         run: terraform apply -auto-approve
 
----
-# .github/workflows/2-deploy-ui.yml
-name: 2. Deploy UI to K3s
-
-on:
-  workflow_dispatch:  # Manual trigger
-
-permissions:
-  id-token: write
-  contents: read
-
-jobs:
   deploy-ui:
     name: Deploy UI to K3s
     runs-on: ubuntu-latest
+    needs: []
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -79,21 +67,10 @@ jobs:
       - name: Apply Kubernetes Manifests
         run: kubectl apply -f kubernetes-manifests/
 
----
-# .github/workflows/3-terraform-destroy.yml
-name: 3. Destroy K3s Cluster
-
-on:
-  workflow_dispatch:  # Manual trigger
-
-permissions:
-  id-token: write
-  contents: read
-
-jobs:
   terraform-destroy:
     name: Destroy K3s Cluster with Terraform
     runs-on: ubuntu-latest
+    needs: []
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -114,6 +91,6 @@ jobs:
         working-directory: k3s-terraform
         run: terraform init
 
-      - name: Destroy Terraform Resources
+      - name: Destroy Terraform Resources (Delete K3s Cluster)
         working-directory: k3s-terraform
         run: terraform destroy -auto-approve
