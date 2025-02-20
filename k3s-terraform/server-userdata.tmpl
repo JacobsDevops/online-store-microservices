@@ -1,0 +1,15 @@
+#!/bin/bash
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+# Install K3s server
+sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.8+k3s1 sh -s - server \
+  --token ${token} \
+  --cluster-init \
+
+
+# Wait for k3s.yaml to appear
+while ! [ -e /etc/rancher/k3s/k3s.yaml ]
+do 
+  sleep 3
+done
