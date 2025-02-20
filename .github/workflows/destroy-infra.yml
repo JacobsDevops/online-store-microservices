@@ -1,0 +1,38 @@
+name: Deploy & Destroy K3s on AWS
+
+on:
+  workflow_dispatch:  # Her job manuel olarak çalıştırılabilir
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  terraform-destroy:
+    name: Destroy K3s Cluster with Terraform
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Initialize Terraform
+        working-directory: k3s-terraform
+        run: terraform init
+
+      - name: Destroy Terraform Resources (Delete K3s Cluster)
+        working-directory: k3s-terraform
+        run: terraform destroy -auto-approve
