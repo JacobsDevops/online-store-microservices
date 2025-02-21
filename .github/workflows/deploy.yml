@@ -31,7 +31,7 @@ jobs:
         run: sudo kubectl get nodes
 
       - name: Apply Kubernetes Manifests
-        run: sudo kubectl create -ns dev
+        run: sudo kubectl create ns dev
 
       - name: Apply Kubernetes Manifests
         run: sudo kubectl apply -f kubernetes-manifests/
