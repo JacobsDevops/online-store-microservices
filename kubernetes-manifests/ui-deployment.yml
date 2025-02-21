@@ -20,22 +20,20 @@ spec:
       labels:
         app: frontend-pod
     spec:
-      #imagePullSecrets:
-        #- name: regcred
       containers:
         - name: ui
           env:
             - name: JAVA_OPTS
-              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+              value: "-XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom"
           envFrom:
             - configMapRef:
                 name: frontend-config
           securityContext:
             capabilities:
               add:
-              - NET_BIND_SERVICE
+                - NET_BIND_SERVICE
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
@@ -45,7 +43,12 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 128m
+              memory: 512Mi
       restartPolicy: Always
 ---
 
