@@ -30,6 +30,16 @@ $ tar xzf ./actions-runner-linux-x64-2.322.0.tar.gz
 
 
 # Create the runner and start the configuration experience
-$ ./config.sh --url https://github.com/JacobsDevops/online-store-microservices --token AQDZTAPAR3A5CEVJKWGMKVLHXAILE
+#$ ./config.sh --url https://github.com/JacobsDevops/online-store-microservices --token AQDZTAPAR3A5CEVJKWGMKVLHXAILE
+
+$ ./config.sh--url https://github.com/JacobsDevops/online-store-microservices \
+  --token AQDZTAPAR3A5CEVJKWGMKVLHXAILE \
+  --name $(hostname) \
+  --runnergroup "Default" \
+  --labels "self-hosted,linux,x64" \
+  --unattended \
+  --replace \
+  --work "_work"
+
 # Last step, run it!
 $ ./run.sh
