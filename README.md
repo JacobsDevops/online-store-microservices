@@ -44,14 +44,14 @@ In the original project the following options are available to deploy the applic
 
 | Name                                                    | Description                                                                                                     |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| [Amazon EKS](./deploy/terraform/eks/default/)           | Deploys the application to Amazon EKS using other AWS services for dependencies, such as RDS, DynamoDB etc.     |
-| [Amazon EKS (Minimal)](./deploy/terraform/eks/minimal/) | Deploys the application to Amazon EKS using in-cluster dependencies instead of RDS, DynamoDB etc.               |
-| [Amazon ECS](./deploy/terraform/ecs/default/)           | Deploys the application to Amazon ECS using other AWS services for dependencies, such as RDS, DynamoDB etc.     |
-| [AWS App Runner](./deploy/terraform/apprunner/)         | Deploys the application to AWS App Runner using other AWS services for dependencies, such as RDS, DynamoDB etc. |
+| [Amazon EKS]                                            | Deploys the application to Amazon EKS using other AWS services for dependencies, such as RDS, DynamoDB etc.     |
+| [Amazon EKS (Minimal)]                                  | Deploys the application to Amazon EKS using in-cluster dependencies instead of RDS, DynamoDB etc.               |
+| [Amazon ECS]                                            | Deploys the application to Amazon ECS using other AWS services for dependencies, such as RDS, DynamoDB etc.     |
+| [AWS App Runner]                                        | Deploys the application to AWS App Runner using other AWS services for dependencies, such as RDS, DynamoDB etc. |
 
 In this project K3s Kubernetes Cluster is used.
 
-### Kubernetes
+### K3s Kubernetes 
 
 In this project a K3s kubernetes cluster is created in AWS and the applicationis deployed in this k3s Kubernetes cluster.
 
