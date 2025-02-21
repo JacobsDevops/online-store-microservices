@@ -53,5 +53,5 @@ In this project K3s Kubernetes Cluster is used.
 
 ### K3s Kubernetes 
 
-In this project a K3s kubernetes cluster is created in AWS and the applicationis deployed in this k3s Kubernetes cluster.
+In this project a K3s kubernetes cluster is created in AWS and the application is deployed in this k3s Kubernetes cluster.
 
