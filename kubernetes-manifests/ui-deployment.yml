@@ -29,7 +29,7 @@ spec:
               value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
           envFrom:
             - configMapRef:
-                name: ui
+                name: frontend-config
           securityContext:
             capabilities:
               add:
@@ -76,4 +76,9 @@ data:
   APPUSER : "appuser"
   APPUID : "1000"
   APPGID : "1000"
+  ENDPOINTS_CATALOG: http://catalog
+  ENDPOINTS_CARTS: http://carts
+  ENDPOINTS_CHECKOUT: http://checkout
+  ENDPOINTS_ORDERS: http://orders
+  ENDPOINTS_ASSETS: http://assets
   
