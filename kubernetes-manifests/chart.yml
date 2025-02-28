@@ -53,9 +53,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: carts-svc
+  name: carts-dynamodb-svc
   namespace: dev
 spec:
+  type: NodePort
   ports:
     - name: "80"
       protocol: TCP
@@ -64,7 +65,7 @@ spec:
       nodePort: 30012
   selector:
     app: frontend-pod
-  type: NodePort
+  
 
 ---
 
@@ -78,7 +79,7 @@ data:
   CARTS_DYNAMODB_TABLENAME: Items
   CARTS_DYNAMODB_CREATETABLE: "false"
   CARTS_DYNAMODB_CREATETABLE: "true"
-  AWS_ACCESS_KEY_ID: key
-  AWS_SECRET_ACCESS_KEY: secret
-  CARTS_DYNAMODB_ENDPOINT: http://carts-dynamodb:8000
+  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  CARTS_DYNAMODB_ENDPOINT: http://carts-dynamodb-svc:8000
   
