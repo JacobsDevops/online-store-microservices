@@ -46,7 +46,7 @@ metadata:
   name: dynamodb-config
   namespace: dev
 data:
-  PORT: 8000
+  PORT: "8000"
   SPRING_PROFILES_ACTIVE:  "dynamodb"
   CARTS_DYNAMODB_TABLENAME: "Items"
   #CARTS_DYNAMODB_CREATETABLE: "false"
