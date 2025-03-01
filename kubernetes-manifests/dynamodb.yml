@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: carts-dynamodb
+  namespace: dev
   labels:
     app: dynamodb
 spec:
