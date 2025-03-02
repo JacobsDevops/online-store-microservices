@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-mysqldb
+  namespace: dev
+  labels:
+    app: mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysqldb
+  template:
+    metadata:
+      labels:
+        app: mysqldb
+    spec:
+      containers:
+        - name: mymysql
+          image: "public.ecr.aws/docker/library/mysql:8.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: my-secret-pw
+            - name: MYSQL_DATABASE
+              value: catalog
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldb-svc
+  namespace: dev
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: "mysql"
+  selector:
+    app: mysqldb
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysqldb-secret
+  namespace: dev
+data:
+  username: "Y2F0YWxvZw=="
+  password: "NVlGTWRva2taTWVDeWhpaw=="
