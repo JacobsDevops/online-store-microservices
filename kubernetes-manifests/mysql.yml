@@ -59,9 +59,9 @@ spec:
 
 apiVersion: v1
 kind: Secret
-namespace: dev
 metadata:
   name: mysqldb-secret
+  namespace: dev
 data:
   username: "Y2F0YWxvZw=="
   password: "NVlGTWRva2taTWVDeWhpaw=="
