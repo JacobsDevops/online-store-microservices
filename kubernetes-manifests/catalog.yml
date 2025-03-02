@@ -39,7 +39,7 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: false #true
+            readOnlyRootFilesystem: false # true
             runAsNonRoot: true
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4"
@@ -82,8 +82,8 @@ metadata:
   name: catalog-config
   namespace: dev
 data:
-  DB_ENDPOINT: "catalog-mysql:3306"
-  DB_READ_ENDPOINT: "catalog-mysql:3306"
+  DB_ENDPOINT:  "mysqldb-svc:3306" # "http://mysqldb-svc-svc:3306"
+  DB_READ_ENDPOINT: "mysqldb-svc:3306"
   DB_NAME: "catalog"
   
 ---
