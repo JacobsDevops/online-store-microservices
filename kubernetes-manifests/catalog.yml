@@ -91,6 +91,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: catalog-secret
+  namespace: dev
 data:
   username: "Y2F0YWxvZw=="
   password: "NVlGTWRva2taTWVDeWhpaw=="
