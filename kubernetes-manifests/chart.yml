@@ -19,6 +19,8 @@ spec:
       labels:
         app: carts-pod
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: carts
           env:
@@ -31,7 +33,7 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false #true
             runAsNonRoot: true
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-cart:0.8.4"
