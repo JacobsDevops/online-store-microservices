@@ -39,7 +39,7 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: false ß#true
+            readOnlyRootFilesystem: false #true
             runAsNonRoot: true
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4"
