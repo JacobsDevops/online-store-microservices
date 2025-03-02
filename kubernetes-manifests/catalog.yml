@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+  namespace: dev
+  labels:
+    app: catalog-pod    
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: catalog-pod  
+  template:
+    metadata:
+      labels:
+        app: catalog-pod
+    spec:
+      containers:
+        - name: catalog
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: catalog-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: catalog-secret
+                  key: password
+          envFrom:
+            - configMapRef:
+                name: catalog-config
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              cpu: 128m
+              memory: 256Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-svc
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - name: "80"
+      protocol: TCP
+      port: 80
+      targetPort: 8080 
+      nodePort: 30013
+  selector:
+    app: catalog-pod
+  
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-config
+  namespace: dev
+data:
+  DB_ENDPOINT: "catalog-mysql:3306"
+  DB_READ_ENDPOINT: "catalog-mysql:3306"
+  DB_NAME: "catalog"
+  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: catalog-secret
+data:
+  username: "Y2F0YWxvZw=="
+  password: "NVlGTWRva2taTWVDeWhpaw=="

@@ -36,7 +36,7 @@ spec:
     - port: 8000
       targetPort: 8000
       protocol: TCP
-      name: dynamodb
+      name: "dynamodb"
   selector:
     app: dynamodb
 
