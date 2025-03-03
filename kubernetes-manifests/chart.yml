@@ -76,7 +76,7 @@ metadata:
   name: carts-config
   namespace: dev
 data:
-  PORT: "80"
+  PORT: "8082"
   SERVER_TOMCAT_ACCESSLOG_ENABLED: "true"
   SPRING_PROFILES_ACTIVE:  "dynamodb"
   CARTS_DYNAMODB_TABLENAME: "Items"
