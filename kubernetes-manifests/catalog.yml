@@ -65,7 +65,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8081
+    - port: 80
       protocol: TCP
       targetPort: http
       nodePort: 30011
@@ -89,7 +89,7 @@ data:
   DB_MIGRATE: "true"
   #DB_MIGRATIONS_PATH: "/db/migrations"
   DB_CONNECT_TIMEOUT: "5"
-  PORT: "8081"
+  PORT: "80"
   
 ---
 apiVersion: v1

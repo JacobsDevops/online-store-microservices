@@ -60,7 +60,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8082
+    - port: 80
       protocol: TCP
       targetPort: http
       nodePort: 30012
@@ -76,7 +76,7 @@ metadata:
   name: carts-config
   namespace: dev
 data:
-  PORT: "8082"
+  PORT: "80"
   SERVER_TOMCAT_ACCESSLOG_ENABLED: "true"
   SPRING_PROFILES_ACTIVE:  "dynamodb"
   CARTS_DYNAMODB_TABLENAME: "Items"
