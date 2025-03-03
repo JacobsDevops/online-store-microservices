@@ -67,7 +67,7 @@ spec:
   ports:
     - name: "8080"
       protocol: TCP
-      port: 8080
+      port: 8082
       targetPort: 8080 
       nodePort: 30013
   selector:
@@ -90,7 +90,7 @@ data:
   DB_MIGRATE: "true"
   #DB_MIGRATIONS_PATH: "/db/migrations"
   DB_CONNECT_TIMEOUT: "5"
-  PORT: "8080"
+  PORT: "8082"
   
 ---
 apiVersion: v1
