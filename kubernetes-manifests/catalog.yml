@@ -89,7 +89,7 @@ data:
   DB_MIGRATE: "true"
   #DB_MIGRATIONS_PATH: "/db/migrations"
   DB_CONNECT_TIMEOUT: "5"
-  PORT: "8081"
+  #PORT: "8081"
   
 ---
 apiVersion: v1
