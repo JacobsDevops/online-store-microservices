@@ -59,11 +59,10 @@ metadata:
   namespace: dev
 spec:
   ports:
-    - name: "80"
+    - port: 80
       protocol: TCP
-      port: 80
-      targetPort: 8080 
-      nodePort: 30011
+      targetPort: http
+      nodePort: 30010
   selector:
     app: frontend-pod
   type: NodePort
@@ -79,8 +78,8 @@ data:
   APPUSER : "appuser"
   APPUID : "1000"
   APPGID : "1000"
-  ENDPOINTS_CATALOG: "http://catalog-svc:8080"
-  ENDPOINTS_CARTS: "http://carts-svc:8080"
+  ENDPOINTS_CATALOG: "http://catalog-svc:8081"
+  ENDPOINTS_CARTS: "http://carts-svc:8082"
   ENDPOINTS_CHECKOUT: http://checkout
   ENDPOINTS_ORDERS: http://orders
   ENDPOINTS_ASSETS: http://assets

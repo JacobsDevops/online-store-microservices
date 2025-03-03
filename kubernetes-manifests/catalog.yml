@@ -65,11 +65,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "8080"
+    - port: 8081
       protocol: TCP
-      port: 8080
-      targetPort: 8080 
-      nodePort: 30013
+      targetPort: http
+      nodePort: 30011
   selector:
     app: catalog-pod
   
@@ -82,9 +81,15 @@ metadata:
   name: catalog-config
   namespace: dev
 data:
-  DB_ENDPOINT:  "mysqldb-svc:3306" # "http://mysqldb-svc-svc:3306"
-  DB_READ_ENDPOINT: "mysqldb-svc:3306"
   DB_NAME: "catalog"
+  DB_TYPE: "mysql"
+  DB_ENDPOINT: "mysqldb-svc:3306"         # Updated to match MySQL Service name
+  DB_READ_ENDPOINT: "mysqldb-svc:3306"    # Updated to match MySQL Service name
+  #DB_NAME: "sampledb"
+  DB_MIGRATE: "true"
+  #DB_MIGRATIONS_PATH: "/db/migrations"
+  DB_CONNECT_TIMEOUT: "5"
+  #PORT: "8081"
   
 ---
 apiVersion: v1
