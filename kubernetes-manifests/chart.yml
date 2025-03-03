@@ -38,12 +38,10 @@ spec:
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-cart:0.8.4"
           imagePullPolicy: IfNotPresent
-          #ports:
-            #- name: http
-              #containerPort: 8080
-              #protocol: TCP
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+              protocol: TCP
           resources:
             limits:
               memory: 512Mi
@@ -62,10 +60,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "8081"
+    - port: 8082
       protocol: TCP
-      port: 8081
-      targetPort: 8080 
+      targetPort: http
       nodePort: 30012
   selector:
     app: carts-pod

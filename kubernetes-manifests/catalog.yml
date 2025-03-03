@@ -44,12 +44,10 @@ spec:
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4"
           imagePullPolicy: IfNotPresent
-          #ports:
-            #- name: http
-              #containerPort: 8080
-              #protocol: TCP
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+              protocol: TCP
           resources:
             limits:
               memory: 256Mi
@@ -67,11 +65,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "8082"
+    - port: 8081
       protocol: TCP
-      port: 8082
-      targetPort: 8080 
-      nodePort: 30013
+      targetPort: http
+      nodePort: 30011
   selector:
     app: catalog-pod
   

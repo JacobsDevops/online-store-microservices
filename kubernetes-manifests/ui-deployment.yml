@@ -39,12 +39,10 @@ spec:
             runAsUser: 1000
           image: "public.ecr.aws/aws-containers/retail-store-sample-ui:0.8.4"
           imagePullPolicy: IfNotPresent
-          #ports:
-            #- name: http
-              #containerPort: 8080
-              #protocol: TCP
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+              protocol: TCP
           resources:
             limits:
               memory: 512Mi
@@ -61,11 +59,10 @@ metadata:
   namespace: dev
 spec:
   ports:
-    - name: "80"
+    - port: 80
       protocol: TCP
-      port: 80
-      targetPort: 8080 
-      nodePort: 30011
+      targetPort: http
+      nodePort: 30010
   selector:
     app: frontend-pod
   type: NodePort
