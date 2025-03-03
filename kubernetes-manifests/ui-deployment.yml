@@ -78,8 +78,8 @@ data:
   APPUSER : "appuser"
   APPUID : "1000"
   APPGID : "1000"
-  ENDPOINTS_CATALOG: "http://catalog-svc:8082"
-  ENDPOINTS_CARTS: "http://carts-svc:8081"
+  ENDPOINTS_CATALOG: "http://catalog-svc:8081"
+  ENDPOINTS_CARTS: "http://carts-svc:8082"
   ENDPOINTS_CHECKOUT: http://checkout
   ENDPOINTS_ORDERS: http://orders
   ENDPOINTS_ASSETS: http://assets
