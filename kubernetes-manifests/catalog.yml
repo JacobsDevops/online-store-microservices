@@ -88,7 +88,7 @@ data:
   DB_READ_ENDPOINT: "mysqldb-svc:3306"    # Updated to match MySQL Service name
   #DB_NAME: "sampledb"
   DB_MIGRATE: "true"
-  DB_MIGRATIONS_PATH: "/db/migrations"
+  #DB_MIGRATIONS_PATH: "/db/migrations"
   DB_CONNECT_TIMEOUT: "5"
   PORT: "8080"
   
