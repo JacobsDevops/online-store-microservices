@@ -36,4 +36,7 @@ jobs:
       - name: Apply Kubernetes Manifests
         run: sudo kubectl apply -f kubernetes-manifests/
 
+      - name: Apply Kubernetes Ingress
+        run: sudo kubectl apply -f kubernetes-ingress-files/
+
  
