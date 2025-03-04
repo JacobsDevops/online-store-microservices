@@ -22,7 +22,7 @@ spec:
       securityContext:
         {}
       containers:
-         - name: assets
+        - name: assets
           envFrom:
             - configMapRef:
                 name: assets-config
