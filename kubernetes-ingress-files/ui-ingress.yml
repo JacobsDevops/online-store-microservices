@@ -29,3 +29,8 @@ spec:
             name: frontend-svc
             port:
               number: 80
+
+tls:
+  - hosts:
+    - retail.projectx.nioyatech.com
+    secretName:  projectx-retail-secret 

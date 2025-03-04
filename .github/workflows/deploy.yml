@@ -36,6 +36,10 @@ jobs:
       - name: Apply Kubernetes Manifests
         run: sudo kubectl apply -f kubernetes-manifests/
 
+      - name: creating certificate for ingress 
+        run: sudo kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.1.1/cert-manager.yaml
+        
+
       - name: Apply Kubernetes Ingress
         run: sudo kubectl apply -f kubernetes-ingress-files/ -n dev
 
