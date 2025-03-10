@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+  # Forces HTTPS
+    ingress.kubernetes.io/ssl-redirect: "true"
+    # Uses the right ingress class
+    kubernetes.io/ingress.class: "traefik"
+    # Tells this Ingress to issue a cert via our ClusterIssuer
+    #cert-manager.io/cluster-issuer: letsencrypt-prod
+    # Uses "http01" for ACME provisioning via Let's Encrypt
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    # Specifies the entry points (protocols/ports) that Traefik should listen on.
+    # "web" refers to HTTP traffic, while "websecure" is used for HTTPS traffic.
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    # Assigns middleware(s) to the router, allowing request modifications.
+    #traefik.ingress.kubernetes.io/router.middlewares: dev-strip-prefix@kubernetescrd
+
+spec:
+  rules:
+  - host: retail.projectx.nioyatech.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-svc
+            port:
+              number: 80
+
+tls:
+  - hosts:
+    - retail.projectx.nioyatech.com
+    secretName:  projectx-retail-secret 

@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: samuel@nioyatech.com
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: projectx-retail-secret 
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Add a single challenge solver, HTTP01 using traefik (or nginx if you prefer)
+    #http01: {} 
+    solvers:
+      - http01:
+          ingress:
+            class: traefik

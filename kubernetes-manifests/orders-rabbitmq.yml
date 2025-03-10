@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-orders
+  namespace: dev
+  labels:
+    app: rabbitmq-orders-pod 
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: rabbitmq-orders-pod 
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-orders-pod
+    spec:
+      securityContext:
+        {}
+      containers:
+        - name: rabbitmq-orders
+          envFrom:
+            - configMapRef:
+                name: rabbitmq-config
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+          image: "public.ecr.aws/docker/library/rabbitmq:3-management"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: amqp
+            containerPort: 5672
+            protocol: TCP
+          - name: http
+            containerPort: 15672
+            protocol: TCP
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 128m
+              memory: 128Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-rabbitmq-svc
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - port: 5672
+      targetPort: amqp
+      protocol: TCP
+      name: amqp
+    - port: 15672
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: rabbitmq-orders-pod
+

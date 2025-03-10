@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+  namespace: dev
+  labels:
+    app: orders-pod 
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: orders-pod 
+  template:
+    metadata:
+      labels:
+        app: orders-pod 
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: orders
+          env:
+            - name: JAVA_OPTS
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: orders-db
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orders-db
+                  key: password
+          envFrom:
+            - secretRef:
+                name: orders-rabbitmq
+            - configMapRef:
+                name: orders
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false #true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-orders:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 128m
+              memory: 512Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-svc
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - port: 8085
+      protocol: TCP
+      targetPort: http
+      nodePort: 30015
+  selector:
+    app: orders-pod
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: checkout-config
+  namespace: dev
+data:
+  #PORT: "8083"
+  RETAIL_ORDERS_MESSAGING_PROVIDER: "rabbitmq"
+  SPRING_DATASOURCE_URL:  "jdbc:postgresql://orders-postgresql-svc:5432/orders"
+  SPRING_RABBITMQ_ADDRESSES:  "amqp://orders-rabbitmq-svc:5672"
+  POSTGRES_DB: "orders"
+  POSTGRES_USER: "b3JkZXJz"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: dev
+data:
+  POSTGRES_USER: "QTRZNWY4Q1djU1hZaWloYw=="
+  

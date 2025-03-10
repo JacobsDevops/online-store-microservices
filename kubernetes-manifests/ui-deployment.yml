@@ -82,5 +82,5 @@ data:
   ENDPOINTS_CARTS: "http://carts-svc:8082"
   ENDPOINTS_CHECKOUT: http://checkout
   ENDPOINTS_ORDERS: http://orders
-  ENDPOINTS_ASSETS: http://assets
+  ENDPOINTS_ASSETS: "http://assets-svc:8083"
   

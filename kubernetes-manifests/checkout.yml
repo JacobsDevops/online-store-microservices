@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: dev
+  labels:
+    app: checkout-pod 
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: checkout-pod 
+  template:
+    metadata:
+      labels:
+        app: checkout-pod
+    spec:
+      securityContext:
+        {}
+      containers:
+        - name: checkout
+          envFrom:
+            - configMapRef:
+                name: checkout-config
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+          image: "public.ecr.aws/aws-containers/retail-store-sample-checkout:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 128m
+              memory: 128Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout-svc
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - port: 8084
+      protocol: TCP
+      targetPort: http
+      nodePort: 30014
+  selector:
+    app: checkout-pod
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: checkout-config
+  namespace: dev
+data:
+  #PORT: "8083"
+  REDIS_URL: "redis://checkout-redis-svc:6379"
+  ENDPOINTS_ORDERS: "http://orders-svc:80"
