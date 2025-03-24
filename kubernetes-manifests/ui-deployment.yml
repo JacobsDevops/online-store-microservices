@@ -80,7 +80,7 @@ data:
   APPGID : "1000"
   ENDPOINTS_CATALOG: "http://catalog-svc:8081"
   ENDPOINTS_CARTS: "http://carts-svc:8082"
-  ENDPOINTS_CHECKOUT: http://checkout
-  ENDPOINTS_ORDERS: http://orders
+  ENDPOINTS_CHECKOUT: "http://checkout-svc:8084"
+  ENDPOINTS_ORDERS: "http://orders-svc:8085"
   ENDPOINTS_ASSETS: "http://assets-svc:8083"
   
